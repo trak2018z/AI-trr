@@ -1,0 +1,59 @@
+<!doctype html>
+	<html lang="pl">
+		<head>
+			<title>Przeglądy</title>
+
+
+
+			<style = "text/css">
+table {
+	background: #cde;
+	font-family: sans-serif;
+	font-size: 12px;
+	border: 1px solid #cde;
+	padding: 2px;
+	border-spacing: 0 1px;
+	text-align: left;
+}
+
+tr:nth-child(odd) td {
+	background: #fff;
+}
+tr:nth-child(even) td {
+	background: #eee;
+}
+
+th {
+	background: #cde;
+	padding: 5px;
+}
+td {
+	padding: 5px;
+}
+
+td:nth-child(5) {
+	text-align: center;
+}
+a {
+	color: #47c;
+}
+
+
+</style>
+		</head>
+		<body>
+<table class="tabele" cellspacing='0'  align="center">
+<tr><td>Województwo</td><td>Powiat</td><td>Miasto</td><td>Ulica</td> <td>Numer</td><td>Właściciel</td> <td>Gaz</td> <td>Komin </td> <td> Elektryka</td> <td>Przegląd budynku</td>  </tr>
+
+{% for row in context %}
+
+<tr>
+<td>{{row.state}}</td><td>{{row.region}}</td><td>{{row.city}}</td><td>{{row.street}} </td><td>{{row.number}}</td><td>{{row.owner}}</td> <td>{{row.gas}} </td><td>{{row.chimney}}  </td><td>{{row.electricity}} </td><td>{{row.building}}  </td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+</body>
+</html>
