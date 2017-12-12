@@ -50,7 +50,7 @@ class User(models.Model):
 
 class Building(models.Model):
 	id = models.AutoField(primary_key=True)
-	street = models.ForeignKey(Region, null = True, default = None)
+	street = models.ForeignKey(Street, null = True, default = None)
 	number = models.CharField(max_length=60)
         postal_code = models.CharField(max_length=5)
 	owner = models.CharField(max_length=60)

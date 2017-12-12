@@ -1,0 +1,142 @@
+<!doctype html>
+	<html lang="pl">
+<style = "text/css">
+	h1 { text-align: center; }
+
+table {
+	background: #cde;
+	font-family: sans-serif;
+	font-size: 12px;
+	border: 1px solid #cde;
+	padding: 2px;
+	border-spacing: 0 1px;
+	text-align: left;
+}
+
+tr:nth-child(odd) td {
+	background: #fff;
+}
+tr:nth-child(even) td {
+	background: #eee;
+}
+
+th {
+	background: #cde;
+	padding: 5px;
+}
+td {
+	padding: 5px;
+}
+
+td:nth-child(5) {
+	text-align: center;
+}
+a {
+	color: #47c;
+}
+</style>
+		<head>
+			<title>Przeglądy</title>
+
+
+
+</head>
+
+
+<body onload = "start_prepair()">
+	
+	<h1>Rejestr Przeglądów Budowlanych</h1>
+
+	<script type="text/javascript">
+
+		function state_send(selectObject)
+		{	
+ 		var value = selectObject.value;
+		alert(value);
+
+		}		
+		
+		function start_prepair(){
+		document.getElementById("chimney_desc").style.visibility = "hidden"
+		document.getElementById("electr_desc").style.visibility = "hidden"
+		document.getElementById("gas_desc").style.visibility = "hidden"
+		document.getElementById("build_desc").style.visibility = "hidden"
+		document.getElementById("nor").style.visibility = "hidden"
+		}
+
+		function show_chimney_description() {
+    		if (document.getElementById("chimney_desc").style.visibility == "visible")
+			document.getElementById("chimney_desc").style.visibility = "hidden"
+		else 
+			document.getElementById("chimney_desc").style.visibility = "visible"
+		}
+		function show_electr_description() {
+    		if (document.getElementById("electr_desc").style.visibility == "visible")
+			document.getElementById("electr_desc").style.visibility = "hidden"
+		else 
+			document.getElementById("electr_desc").style.visibility = "visible"
+		}
+		function show_gas_description() {
+    		if (document.getElementById("gas_desc").style.visibility == "visible")
+			document.getElementById("gas_desc").style.visibility = "hidden"
+		else 
+			document.getElementById("gas_desc").style.visibility = "visible"
+		}
+		function show_build_description() {
+    		if (document.getElementById("build_desc").style.visibility == "visible")
+			document.getElementById("build_desc").style.visibility = "hidden"
+		else 
+			document.getElementById("build_desc").style.visibility = "visible"
+		}
+
+
+	</script>
+
+
+	<form id="none" method="post" action="/register/overview/{{next}}/"><div align="center" >
+	{% csrf_token %}
+
+
+	<table class="tabele" cellspacing='0'  align="center">
+		<tr>
+			<td>Województwo</td>	<td>{{adress.state}}</td>
+		</tr>
+		<tr>
+			<td>Powiat</td>	<td>{{adress.region}}</td>
+		</tr>
+		<tr>
+			<td>Miejscowość</td>	<td>{{adress.city}}</td>
+		</tr>
+		<tr>
+			<td>Ulica</td>	<td>{{adress.street}}</td>
+		</tr>
+		<tr>
+			<td>Numer domu</td>	<td>{{adress.number}}</td>
+		</tr>
+		<tr>
+			<td>Przegląd:</td>	<td> <label><input name="chimney_checkbox" onchange="show_chimney_description()" type="checkbox">Instalacji kominowej</label> <br><input name="chimney_d" visibility="hidden" type="text" id="chimney_desc"></td> 
+		</tr>
+		<tr>
+			<td>Przegląd:</td>	<td> <label><input name="electr_checkbox" onchange="show_electr_description()" type="checkbox">Instalacji elektrycznej</label> <br><input  name="electr_d" visibility="hidden" type="text" id="electr_desc"></td> 
+		</tr>
+		<tr>
+			<td>Przegląd:</td>	<td> <label><input name="gas_checkbox" onchange="show_gas_description()" type="checkbox">Instalacji gazowej</label> <br><input name="gas_d" visibility="hidden" type="text" id="gas_desc"></td>
+		</tr>
+		<tr>
+			<td>Przegląd:</td>	<td> <label><input name="build_checkbox" onchange="show_build_description()" type="checkbox">Ogólny budynku</label> <br><input name="build_d" visibility="hidden" type="text" id="build_desc"></td>
+		</tr>
+	</table>
+	
+	
+
+		
+        
+	<button type="submit" name="overview_apply" value="submit">Zatwierdź przegląd!</button><br>
+	<input id="nor" name="build_id" type="text" value="{{adress.build_id}}">
+	</div></form>
+		
+
+</body>
+
+
+</html>

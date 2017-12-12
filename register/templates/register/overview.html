@@ -1,0 +1,80 @@
+<!doctype html>
+	<html lang="pl">
+<style = "text/css">
+	h1 { text-align: center; }
+</style>
+		<head>
+			<title>Przeglądy</title>
+
+
+
+</head>
+
+
+<body onload = "addItem({{next}})">
+
+	<h1>Rejestr Przeglądów Budowlanych</h1>
+
+
+
+	<script type="text/javascript">
+
+		function state_send(selectObject)
+		{	
+ 		var value = selectObject.value;
+		alert(value);
+
+		}		
+
+
+		 function addItem(i) {
+
+			var parentselect = document.getElementById("lista");
+			var newoption = document.createElement("option");
+			if (i == "5")
+{
+			newoption.text = "inny";
+			newoption.value = "-1";
+			newoption.selected=false;
+			parentselect.options[parentselect.options.length] = newoption;
+			//alert(i);
+}
+				//var oListbox = document.getElementById("lista");
+				//alert(i);
+				//if (i == "5")
+			//	{
+			//		ListUtil.add(oListbox, "inny", "-1");
+			//		alert(i);
+			//	}
+
+			 }
+		
+		
+
+
+	</script>
+
+
+
+	
+	<form id="none" method="post" action="/register/overview/{{next}}/"><div align="center"  >
+	{% csrf_token %}
+		<select name="objects" id="lista">
+				
+				<option value="" disabled selected>{{label}}</option>
+			{% for row in context %}
+				<option value="{{row.object_id}}">{{row.object_name}}</option>
+			{% endfor %}
+
+		</select><br><br>
+	<button type="submit" name="next_step" value="{{next}}">Przejdź dalej</button>
+
+	</div></form>
+
+
+
+
+</body>
+
+
+</html>
