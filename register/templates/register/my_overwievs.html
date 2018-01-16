@@ -48,8 +48,10 @@ a {
 
 <center><h1>Rejestr Przeglądów Budowlanych</h1></center>
 
-<h2><center>Jesteś zalogowany jako: {{username}} </center> 
+<h2><center>Jesteś zalogowany jako: {{username}}</center> 
 <center><a href="/register/logout/">Wyloguj!</a></center></h2> 
+
+{{context}}
 
 <table class="tabele" cellspacing='0'  align="center">
 <tr><td>Województwo</td><td>Powiat</td><td>Miasto</td><td>Ulica</td> <td>Numer</td><td>Właściciel</td> <td>Gaz</td> <td>Komin </td> <td> Elektryka</td> <td>Przegląd budynku</td>  </tr>
@@ -57,7 +59,7 @@ a {
 {% for row in context %}
 
 <tr>
-<td>{{row.state}}</td><td>{{row.region}}</td><td>{{row.city}}</td><td>{{row.street}} </td><td>{{row.number}}</td><td>{{row.owner}}</td> <td>{{row.gas}} </td><td>{{row.chimney}}  </td><td>{{row.electricity}} </td><td>{{row.building}}  </td>
+<td>{{row.ins_type}}</td><td>{{row.region}}</td><td>{{row.city}}</td><td>{{row.street}} </td><td>{{row.number}}</td><td>{{row.owner}}</td> <td>{{row.gas}} </td><td>{{row.chimney}}  </td><td>{{row.electricity}} </td><td>{{row.building}}  </td>
 </tr>
 
 {% endfor %}

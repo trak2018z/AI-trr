@@ -1,0 +1,10 @@
+{% extends "base_2.html"%}
+{% block title %} - panel urzędnika{% endblock %}
+{% block header %}<h2><center>Jesteś zalogowany jako: {{user.username}}</center> 
+<center><a href="/register/logout/">Wyloguj!</a></center></h2> {% endblock %}
+{% block content%}
+ 
+ <center><h3>Dostępne opcje:</h3></center>
+<center><a href="/register/overview/0/">Wykonaj przegląd</a></center>
+<center><a href="/register/ovw/myoverviews/">Moje przeglądy</a></center>
+{% endblock %}

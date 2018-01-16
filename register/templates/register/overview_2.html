@@ -113,18 +113,29 @@ a {
 		<tr>
 			<td>Numer domu</td>	<td>{{adress.number}}</td>
 		</tr>
+		{% if chimney %}
 		<tr>
 			<td>Przegląd:</td>	<td> <label><input name="chimney_checkbox" onchange="show_chimney_description()" type="checkbox">Instalacji kominowej</label> <br><input name="chimney_d" visibility="hidden" type="text" id="chimney_desc"></td> 
 		</tr>
+		{% endif %}
+
+		{% if electricity %}
 		<tr>
 			<td>Przegląd:</td>	<td> <label><input name="electr_checkbox" onchange="show_electr_description()" type="checkbox">Instalacji elektrycznej</label> <br><input  name="electr_d" visibility="hidden" type="text" id="electr_desc"></td> 
 		</tr>
+		{% endif %}
+
+		{% if gas %}
 		<tr>
 			<td>Przegląd:</td>	<td> <label><input name="gas_checkbox" onchange="show_gas_description()" type="checkbox">Instalacji gazowej</label> <br><input name="gas_d" visibility="hidden" type="text" id="gas_desc"></td>
 		</tr>
+		{% endif %}
+
+		{% if building %}
 		<tr>
 			<td>Przegląd:</td>	<td> <label><input name="build_checkbox" onchange="show_build_description()" type="checkbox">Ogólny budynku</label> <br><input name="build_d" visibility="hidden" type="text" id="build_desc"></td>
 		</tr>
+		{% endif %}
 	</table>
 	
 	
@@ -132,7 +143,11 @@ a {
 		
         
 	<button type="submit" name="overview_apply" value="submit">Zatwierdź przegląd!</button><br>
-	<input id="nor" name="build_id" type="text" value="{{adress.build_id}}">
+
+<br>
+<br>
+<center><a href="/register/official/">Powrót!</a></center>
+
 	</div></form>
 		
 

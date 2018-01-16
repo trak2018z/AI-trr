@@ -52,12 +52,12 @@ a {
 <center><a href="/register/logout/">Wyloguj!</a></center></h2> 
 
 <table class="tabele" cellspacing='0'  align="center">
-<tr><td>Województwo</td><td>Powiat</td><td>Miasto</td><td>Ulica</td> <td>Numer</td><td>Właściciel</td> <td>Gaz</td> <td>Komin </td> <td> Elektryka</td> <td>Przegląd budynku</td>  </tr>
+<tr><td>Przegląd</td><td>Województwo</td><td>Powiat</td><td>Miasto</td><td>Ulica</td> <td>Numer</td><td>Data wystawienia</td> <td>Opis</td> </tr>
 
 {% for row in context %}
 
 <tr>
-<td>{{row.state}}</td><td>{{row.region}}</td><td>{{row.city}}</td><td>{{row.street}} </td><td>{{row.number}}</td><td>{{row.owner}}</td> <td>{{row.gas}} </td><td>{{row.chimney}}  </td><td>{{row.electricity}} </td><td>{{row.building}}  </td>
+<td>{{row.ins_type}}</td><td>{{row.adress.state}}</td><td>{{row.adress.region}}</td><td>{{row.adress.city}}</td><td>{{row.adress.street}} </td><td>{{row.adress.number}}</td><td>{{row.data}}</td><td>{{row.description}}</td>
 </tr>
 
 {% endfor %}

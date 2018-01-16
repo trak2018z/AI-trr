@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+{% block title %} - rejestracja{% endblock %}   
+{% block content %}
+<center>
+<h2>Rejestr Przeglądów Budowlanych</h2>
+Rejestracja:
+<p>
+<div style="margin-left:35%;margin-right:35%;">
+<fieldset>
+  <legend> Wypełnij formularz: </legend>
+    <form method="post" action=".">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Rejestracja">
+  </form>
+</fieldset>
+</div>
+</center>
+{% endblock %}
+{% block footer %}
+<p>
+<div style="text-align:center;"><a href="/">Strona główna</a></div>
+</p>
+{% endblock %}
