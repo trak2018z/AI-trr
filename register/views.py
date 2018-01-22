@@ -18,7 +18,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .forms import FormularzRejestracji, FormularzLogowania
-
+import random
 def index(request):
 	return HttpResponse("Hello")
 
@@ -133,29 +133,41 @@ def register_page(request):
     if request.method == 'POST':
         form = FormularzRejestracji(request.POST)
         if form.is_valid():
-            user = User(
- 	    name=form.cleaned_data['name'],
-	    second_name=form.cleaned_data['second_name'],
-	    address=form.cleaned_data['adress'],
-	    city=form.cleaned_data['city'],
-	    phone_number=form.cleaned_data['phone'],
-            username=form.cleaned_data['username'],
-            password=form.cleaned_data['password1'],
-            )
-            user.last_name = form.cleaned_data['phone']
+	    if form.cleaned_data['log_on']:
+		    reg = random.randint(1,2)
+		    if reg == 2:
+			reg = 3
+		    user = User(
+	 	    name=form.cleaned_data['name'],
+		    second_name=form.cleaned_data['second_name'],
+		    address=form.cleaned_data['adress'],
+		    city=form.cleaned_data['city'],
+		    phone_number=form.cleaned_data['phone'],
+		    username=form.cleaned_data['username'],
+		    password=form.cleaned_data['password1'],
+		    type_id=2,
+		    region_id=reg
+		    )
+            else:
+		    num = random.randint(3,6)
+		    if num == 6:
+			num = 9
+		    user = User(
+	 	    name=form.cleaned_data['name'],
+		    second_name=form.cleaned_data['second_name'],
+		    address=form.cleaned_data['adress'],
+		    city=form.cleaned_data['city'],
+		    phone_number=form.cleaned_data['phone'],
+		    username=form.cleaned_data['username'],
+		    password=form.cleaned_data['password1'],
+		    type_id=num,
+		    region_id=1
+		    )
             user.save()
-            if form.cleaned_data['log_on']:
-                user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'])
-                login(request,user)
-                template = loader.get_template("main_page.html")
-                variables = RequestContext(request,{'user':user})
-                output = template.render(variables)
-                return HttpResponseRedirect("/") 
-            else:    
-                template = loader.get_template("registration/register_success.html")
-                variables = RequestContext(request,{'username':form.cleaned_data['username']})
-                output = template.render(variables)
-                return HttpResponse(output)            
+  	    template = loader.get_template("registration/register_success.html")
+            variables = RequestContext(request,{'username':form.cleaned_data['username']})
+            output = template.render(variables)
+            return HttpResponse(output)            
     else:
         form = FormularzRejestracji()
     template = loader.get_template("registration/register.html")    
@@ -347,6 +359,49 @@ def official_show_non_actual(request):
 	
 	return HttpResponse(template.render(context,request))
 
+def selection(lvl,ajdi):
+	streets = Street.objects.all()
+	citys = City.objects.all()
+	regions = Region.objects.all()
+	states = State.objects.all()
+	buildings = Building.objects.all()
+
+	if lvl == 1: #województwa
+		for curBuild in buildings:
+			for curStreet in streets:
+				if curBuild.street_id == curStreet.id:
+					for curCity in citys:
+						if curStreet.city_id == curCity.id:
+							for curRegion in regions:
+								if curCity.region_id == curRegion.id:
+									for curState in states:
+										if curState.id == ajdi == curRegion.state_id:
+											return 1;
+	elif lvl == 2: #powiaty
+		for curBuild in buildings:
+			for curStreet in streets:
+				if curBuild.street_id == curStreet.id:
+					for curCity in citys:
+						if curStreet.city_id == curCity.id:
+							for curRegion in regions:
+								if ajdi == curRegion.id == curCity.region_id:
+									return 1;
+	elif lvl == 3: #miasta
+		for curBuild in buildings:
+			for curStreet in streets:
+				if curBuild.street_id == curStreet.id:
+					for curCity in citys:
+						if ajdi == curCity.id == curStreet.city_id:
+							return 1;
+	elif lvl == 4: #ulice
+		for curBuild in buildings:
+			for curStreet in streets:
+				if curBuild.street_id == ajdi:
+					return 1;
+	else:
+		return 0;
+	return 0;
+
 def overview(request,what_choosed): # 0 -> województwa ; 1 -> powiat ; 2 -> miasto ; 3 -> ulica ; 4 -> dom
 	check = user_check(request)
 	if (check == False):
@@ -374,8 +429,9 @@ def overview(request,what_choosed): # 0 -> województwa ; 1 -> powiat ; 2 -> mia
 
 	if what_choosed == '0':
 		for curState in states:
-			row = {'object_name':curState.state_name, 'object_id':curState.id}
-			toDisp.append(row)
+			if selection(1,curState.id) == 1:
+				row = {'object_name':curState.state_name, 'object_id':curState.id}
+				toDisp.append(row)
 		next = '1'
 		label = 'wybierz województwo'
 	elif what_choosed == '1':
@@ -383,8 +439,9 @@ def overview(request,what_choosed): # 0 -> województwa ; 1 -> powiat ; 2 -> mia
 			choosed_id = request.POST.get('objects')
 		for curRegion in regions:
 			if curRegion.state_id == int(choosed_id):
-				row = {'object_name':curRegion.region_name, 'object_id':curRegion.id}
-				toDisp.append(row)
+				if selection(2,curRegion.id) == 1:
+					row = {'object_name':curRegion.region_name, 'object_id':curRegion.id}
+					toDisp.append(row)
 		next = '2'
 		label = 'wybierz powiat'
 	elif what_choosed == '2':
@@ -392,8 +449,9 @@ def overview(request,what_choosed): # 0 -> województwa ; 1 -> powiat ; 2 -> mia
 			choosed_id = request.POST.get('objects')
 		for curCity in citys:
 			if curCity.region_id == int(choosed_id):
-				row = {'object_name':curCity.city_name, 'object_id':curCity.id}
-				toDisp.append(row)
+				if selection(3,curCity.id) == 1:
+					row = {'object_name':curCity.city_name, 'object_id':curCity.id}
+					toDisp.append(row)
 		next = '3'
 		label = 'wybierz miasto'
 	elif what_choosed == '3':
@@ -401,8 +459,9 @@ def overview(request,what_choosed): # 0 -> województwa ; 1 -> powiat ; 2 -> mia
 			choosed_id = request.POST.get('objects')
 		for curStreet in streets:
 			if curStreet.city_id == int(choosed_id):
-				row = {'object_name':curStreet.street_name, 'object_id':curStreet.id}
-				toDisp.append(row)
+				if selection(4,curStreet.id) == 1:
+					row = {'object_name':curStreet.street_name, 'object_id':curStreet.id}
+					toDisp.append(row)
 		next = '4'
 		label = 'wybierz ulicę'
 	elif what_choosed == '4':

@@ -34,7 +34,7 @@ class FormularzRejestracji(forms.Form):
     password1 = forms.CharField(label="Hasło:",widget=forms.PasswordInput())
     password2 = forms.CharField(label="Powtórz hasło:",widget=forms.PasswordInput())
     phone = forms.CharField(label="Telefon:",max_length=20,required=False)
-    log_on = forms.BooleanField(label="Logowanie po rejestracji:",required=False)
+    log_on = forms.BooleanField(label="Typ konta urzędnik:",required=False)
 
     def clean_username(self):
         username = self.cleaned_data['username']

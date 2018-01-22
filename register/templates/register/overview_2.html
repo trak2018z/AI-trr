@@ -57,6 +57,7 @@ a {
 		}		
 		
 		function start_prepair(){
+		document.getElementById("nor").style.visibility = "hidden"
 		document.getElementById("chimney_desc").style.visibility = "hidden"
 		document.getElementById("electr_desc").style.visibility = "hidden"
 		document.getElementById("gas_desc").style.visibility = "hidden"
@@ -143,7 +144,7 @@ a {
 		
         
 	<button type="submit" name="overview_apply" value="submit">Zatwierdź przegląd!</button><br>
-
+	<input visibility="hidden" id="nor" name="build_id" type="text" value="{{adress.build_id}}">
 <br>
 <br>
 <center><a href="/register/official/">Powrót!</a></center>
